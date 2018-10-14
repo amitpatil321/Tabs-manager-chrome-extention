@@ -1,6 +1,27 @@
+body{
+    padding: 10px;
+}
+.container{
+    width: 600px;
+    max-height: 200;
+    overflow: visible;
+}
+.ui.hosts.menu .item{
+    padding: 5px 10px;
+    margin: 5px 0px;
+}
+
+.ui.menu .item>img:not(.ui){
+    width: inherit;
+}
+
+.ui.list>.item .header{
+    display: inline;
+}
+
 .float-left{
-	float: left;
+    float: left;
 }
 .float-right{
-	float: right;
+    float: right;
 }
