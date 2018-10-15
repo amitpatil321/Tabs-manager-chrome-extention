@@ -8,10 +8,11 @@
       "default_icon": "/assets/images/hello_extensions.png"
     },
     "permissions": [
-          "tabs","notifications"
+          "tabs", "notifications", "storage"
     ],
     "background": {
       "scripts": ["background.js"],
       "persistent": false
-    }
+    },
+    "options_page": "options.html"
   }

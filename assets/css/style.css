@@ -2,9 +2,13 @@ body{
     padding: 10px;
 }
 .container{
-    width: 600px;
+    /*width: 600px;*/
+    min-width: 500px;
+    width: auto;
+    max-width: 800px;
     max-height: 200;
     overflow: visible;
+    padding-bottom: 10px;
 }
 .ui.hosts.menu .item{
     padding: 5px 10px;
@@ -17,6 +21,15 @@ body{
 
 .ui.list>.item .header{
     display: inline;
+}
+
+.item > .content > img{
+    vertical-align: middle;
+}
+
+.ui.menu .item>.floating.label {
+    background: none !important;
+    color: green !important;
 }
 
 .float-left{

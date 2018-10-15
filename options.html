@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Options</title>
+    <head>
+        <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="/assets/js/semantic.min.js"></script>
+        <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+        <script type="text/javascript" src="options.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/assets/css/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/options.css">
+    </head>
+</head>
+<body>
+
+    <div class="ui main text container optionspage">
+      <div class="column">
+        <div class="ui raised segment">
+
+        <h3>Options</h3>
+        <hr>
+        <div class="ui form">
+          <div class="inline field">
+            <label>Show number of child pages </label>
+            <div class="ui checkbox">
+              <input type="checkbox" id="noofpages">
+              <label></label>
+            </div>
+          </div>
+          <div class="inline field">
+            <label>Show confirm before closing multiple tabs</label>
+            <div class="ui checkbox">
+              <input type="checkbox" id="closeconfirm">
+              <label></label>
+            </div>
+          </div>
+          <hr>
+          <div class="inline field">
+            <input type="button" class="ui button teal" name="save" id="saveoptions" value="Save">
+            <span class="ui text-green saved" style="display:none;"><i class="ui icon check"></i> Changes saved</span>
+          </div>
+        </div>
+       </div>
+      </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+body{
+    background: #eee;
+}
+.optionspage{
+    padding: 20px;
+    margin-top: 5%;
+}
+hr{
+    color: #888;
+    border: 1px 0px 0px solid #888;
+}
+.text-green{
+    color: green;
+}
