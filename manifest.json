@@ -1,5 +1,5 @@
 {
-    "name": "Hello Extensions",
+    "name": "Tabs Manager",
     "description" : "Base Level Extension",
     "version": "1.0",
     "manifest_version": 2,
@@ -8,11 +8,12 @@
       "default_icon": "/assets/images/hello_extensions.png"
     },
     "permissions": [
-          "tabs", "notifications", "storage"
+          "tabs", "notifications", "storage", "management"
     ],
     "background": {
       "scripts": ["background.js"],
       "persistent": false
     },
-    "options_page": "options.html"
+    "options_page": "options.html",
+    "incognito" : "not_allowed"
   }

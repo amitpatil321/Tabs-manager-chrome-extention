@@ -2,24 +2,44 @@
 
 class tabsManager {
     constructor(chunks) {
-        this.uniqueHosts = {};
+      this.uniqueHosts = {};
+      this.maxTitleLength = 55; // trim extra characters
+      this.settings = {};
+      // load settings
+      this.getOptions(function(){});
     }
 
+    // read settings data from storage
     getOptions(callback){
-        chrome.storage.sync.get(["tm_settings"], function(settings) {
-            if(typeof settings == "object"){
-                callback(settings);
-            }
-            return null;
-        });
+      var _this = this;
+      chrome.storage.sync.get(["tm_settings"], function(settings) {
+          if(typeof settings == "object"){
+              _this.settings = settings.tm_settings;
+              callback(settings.tm_settings);
+          }
+          return null;
+      });
     }
 
+    // notification
+    notify(message){
+        var opt = {
+          type: "basic",
+          title: chrome.runtime.getManifest().name,
+          message: message,
+          iconUrl: "../assets/images/hello_extensions.png"
+        }
+        // show notification
+        chrome.notifications.create(opt, function(){});
+    }
 
+    // read all pages and group them
     loadTabs(){
         var _this = this;
         var hosts = [];
         var tabUi = '<div class="ui top attached tabular hosts menu">';
         var tabContent = "";
+        // geta details of all tabs
         chrome.tabs.getAllInWindow(null, function(alltabs) {
           _.forEach(alltabs, function(eachTab, index){
 
@@ -44,29 +64,32 @@ class tabsManager {
               // generate unique tabs for each host
               favicon = _this.getFavicon(eachPage[0].favIconUrl);
 
-              tabUi += `<a class="item" data-tab="tab`+index+`">`+favicon;
+              tabUi += `<a class="item" data-tab="tab${index}" data-index="${index}">`+favicon;
 
               // Check user settings
-              if(settings.child_count)
-                tabUi += `<div class="floating ui grey label">`+childs+`</div>`;
+              if(_this.settings.child_count)
+                tabUi += ` <span class="childcount">${childs}</span>`;
+
+                tabUi += `<div class="floating ui red label closeall">x</div>`;
 
               tabUi += `</a>`;
               // print urls under host
               tabContent += `
-                <div class="ui bottom attached tab segment" data-tab="tab`+index+`">`;
+                <div class="ui bottom attached tab segment" data-tab="tab${index}">`;
 
             // print list of open pages in side tab contents
             _.forEach(eachPage, function(page, index){
+              tm.c(page);
               tabContent += `<div class="ui relaxed divided list">`;
               tabContent +=
               `<div class="item">
-                <div class="content" id="`+page.id+`">
-                  `+favicon+`&nbsp;&nbsp;<a class="header sitetitle">`+_this.makeTitle(page.title)+`</a>`;
+                <div class="content eachpage" id="${page.id}" data-active="${page.active}">
+                  ${favicon}&nbsp;&nbsp;<a class="header sitetitle">${_this.makeTitle(page.title)}</a>`;
                   // highlight active tab
                   if(page.active)
                     tabContent += `<a class="ui green empty circular label"></a>`;
 
-                  tabContent += `<a href="" class="float-right">
+                  tabContent += `<a href="" class="float-right closetab">
                     <i class="ui icon close red"></i></a>
                 </div>
                </div>`;
@@ -87,17 +110,19 @@ class tabsManager {
 
     }
 
+    // extract domain name from url string
+    // getDomain(url){
+    //   domain=url.split("//")[1];
+    //   return domain.split("/")[0];
+    // }
 
-    getDomain(url){
-      domain=url.split("//")[1];
-      return domain.split("/")[0];
-    }
-
+    // format/trim tab title
     makeTitle(title){
-      if(title.length >= maxTitleLength) return title.substring(0,maxTitleLength) + "...";
+      if(title.length >= this.maxTitleLength) return title.substring(0,this.maxTitleLength) + "...";
       return title;
     }
 
+    // extract host name from url string
     getHost(str){
       var matches = str.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
       var domain = matches && matches[1];
@@ -107,12 +132,21 @@ class tabsManager {
       return str;
     }
 
+    // wrap webite favicon in img tag
     getFavicon(favicon){
       // c(favicon);
       if(favicon !== undefined)
-        favicon = '<img src="'+favicon+'" height="16" width="16" />';
-      else favicon = '<i class="file image icon"></i>';
+        favicon = `<img src="${favicon}" height="16" width="16" />`;
+      else favicon = `<i class="file image icon"></i>`;
       return favicon;
+    }
+
+    selectClosest(item){
+      index = item.closest('.item').data("index");
+      if(index >= 1){
+        index = index - 1;
+        $('.item[data-index="'+parseInt(index)+'"]').trigger('click');
+      }
     }
 
     c(str){

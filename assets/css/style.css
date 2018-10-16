@@ -1,6 +1,48 @@
 body{
     padding: 10px;
+    min-height: 200px !important;
+    max-height: 500px !important;
+    overflow: scroll;
+    overflow-y: none !important;
 }
+/*** Scrollbar style ***/
+
+::-webkit-scrollbar
+{
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track-piece
+{
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-track-piece
+{
+  background-color: white;
+}
+
+::-webkit-scrollbar-track-piece:no-button
+{
+}
+
+::-webkit-scrollbar-thumb
+{
+  background-color: #7D7D7D;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover
+{
+  background-color: #999;
+}
+
+::-webkit-scrollbar-thumb:active
+{
+  background-color: #666;
+}
+
 .container{
     /*width: 600px;*/
     min-width: 500px;
@@ -13,6 +55,12 @@ body{
 .ui.hosts.menu .item{
     padding: 5px 10px;
     margin: 5px 0px;
+}
+
+.hosts{
+    max-width: 500px;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .ui.menu .item>img:not(.ui){
@@ -28,10 +76,20 @@ body{
 }
 
 .ui.menu .item>.floating.label {
+    display: block;
     background: none !important;
-    color: green !important;
+    color: red !important;
+    left: 125% !important;
+    top: -20% !important;
 }
-
+.childcount{
+    font-size: 12px;
+    color: #888;
+}
+.closeall {
+    padding: 0px !important;
+    margin-left: 70px !important;
+}
 .float-left{
     float: left;
 }
